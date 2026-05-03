@@ -1,0 +1,8 @@
+package net.su.app.appCodi.controller;
+
+import org.springframework.stereotype.Controller;
+
+@Controller
+public class AppCodiReqstController {
+
+}

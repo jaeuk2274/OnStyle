@@ -1,0 +1,84 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+<!-- 화면 디자인에 필요한 CSS -->
+<link href="/resources/admin/main/adminBootstrap/css/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="/resources/assets/css/custom.min.css"/>
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12">
+				<select class="btn btn-default" style="width:20%; float:left"></select>
+				<select class="btn btn-default" style="width:20%; margin-left:10px; float:left"></select>
+			</div>
+			<div class="col-xs-12">
+				<table class="table table-bordered" style="width:100%; float:left; text-align:center">
+   					<tr>
+    					<th colspan="8" class="active text-center">
+    						size
+    					</th>
+   					</tr>
+   					<tr>
+  						<td>
+  							사이즈
+  						</td>
+  						<td>
+  							총기장
+  						</td>
+  						<td>
+  							어깨넓이
+  						</td>
+  						<td>
+  							가슴 둘레
+  						</td>
+  						<td>
+  							밑단 둘레
+  						</td>
+  						<td>
+  							소매 길이
+  						</td>
+  						<td>
+  							소매통
+  						</td>
+  						<td>
+  							소매 절개선 둘레
+  						</td>
+   					</tr>
+   					<tr>
+   						<td>
+  							<input type=text class="form-control" style="width:100%">
+  						</td>
+  						<td>
+  							총기장
+  						</td>
+  						<td>
+  							어깨넓이
+  						</td>
+  						<td>
+  							가슴 둘레
+  						</td>
+  						<td>
+  							밑단 둘레
+  						</td>
+  						<td>
+  							소매 길이
+  						</td>
+  						<td>
+  							소매통
+  						</td>
+  						<td>
+  							소매 절개선 둘레
+  						</td>
+   					</tr>
+   				</table>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

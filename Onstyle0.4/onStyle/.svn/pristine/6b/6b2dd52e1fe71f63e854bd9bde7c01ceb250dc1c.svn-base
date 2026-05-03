@@ -1,0 +1,124 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<%@ include file="/WEB-INF/include/include-header.jspf" %>	
+
+
+<title>테스트</title>
+</head>
+<body>
+	<!-- 상단 바 -->
+	<div>
+		<c:import url="/adminTopMenu.do"/>
+	</div>
+	<!-- 좌측 바 -->
+	<div>
+		<c:import url="/adminLeftMenu.do"/>
+	</div>
+	<!-- 본인 디자인은 여기 안에서 -->
+	<div class="mainContainer">
+	<div class="col-lg-12">
+		<legend>배너관리</legend>
+	</div>
+		<div class="col-lg-12">
+			<legend>주문현황</legend>
+			<table class="table table-hover" style="margin-top:3%">
+				<thead>
+					<tr class="active">
+						<th class="text-center">입금 전</th>
+						<th class="text-center">상품 준비중</th>
+						<th class="text-center">배송 준비중</th>
+						<th class="text-center">배송중</th>
+						<th class="text-center">배송완료</th>
+						<th class="text-center">입금 전 취소</th>
+						<th class="text-center">입금 후 취소</th>
+						<th class="text-center">교환</th>
+						<th class="text-center">반품</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="text-center" style="vertical-align: middle; cursor:pointer">1</td>
+						<td class="text-center" style="vertical-align: middle; cursor:pointer">2</td>
+						<td class="text-center" style="vertical-align: middle; cursor:pointer">5</td>
+						<td class="text-center" style="vertical-align: middle; cursor:pointer">2</td>
+						<td class="text-center" style="vertical-align: middle; cursor:pointer">1</td>
+						<td class="text-center" style="vertical-align: middle; cursor:pointer">4</td>
+						<td class="text-center" style="vertical-align: middle; cursor:pointer">3</td>
+						<td class="text-center" style="vertical-align: middle; cursor:pointer">4</td>
+						<td class="text-center" style="vertical-align: middle; cursor:pointer">3</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="col-lg-6">
+			<legend>코디요청 현황</legend>
+			<c:import url="/adminCodiReqstList.do"/>
+		</div>
+		<div class="col-lg-6">
+			<legend>코디공유 게시판</legend>
+			<table class="table table-hover" style="margin-top:3%">
+				<thead>
+					<tr class="active">
+						<th class="text-center">입금 전</th>
+						<th class="text-center">상품 준비중</th>
+						<th class="text-center">배송 준비중</th>
+						<th class="text-center">배송중</th>
+						<th class="text-center">배송완료</th>
+						<th class="text-center">입금 전 취소</th>
+						<th class="text-center">입금 후 취소</th>
+						<th class="text-center">교환</th>
+						<th class="text-center">반품</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="text-center" style="vertical-align: middle; cursor:pointer">1</td>
+						<td class="text-center" style="vertical-align: middle; cursor:pointer">2</td>
+						<td class="text-center" style="vertical-align: middle; cursor:pointer">5</td>
+						<td class="text-center" style="vertical-align: middle; cursor:pointer">2</td>
+						<td class="text-center" style="vertical-align: middle; cursor:pointer">1</td>
+						<td class="text-center" style="vertical-align: middle; cursor:pointer">4</td>
+						<td class="text-center" style="vertical-align: middle; cursor:pointer">3</td>
+						<td class="text-center" style="vertical-align: middle; cursor:pointer">4</td>
+						<td class="text-center" style="vertical-align: middle; cursor:pointer">3</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="col-lg-12">
+			<legend>1:1 문의 요청</legend>
+			<table class="table table-hover" style="margin-top:3%">
+				<thead>
+					<tr class="active">
+						<th class="text-center">입금 전</th>
+						<th class="text-center">상품 준비중</th>
+						<th class="text-center">배송 준비중</th>
+						<th class="text-center">배송중</th>
+						<th class="text-center">배송완료</th>
+						<th class="text-center">입금 전 취소</th>
+						<th class="text-center">입금 후 취소</th>
+						<th class="text-center">교환</th>
+						<th class="text-center">반품</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="text-center" style="vertical-align: middle; cursor:pointer">1</td>
+						<td class="text-center" style="vertical-align: middle; cursor:pointer">2</td>
+						<td class="text-center" style="vertical-align: middle; cursor:pointer">5</td>
+						<td class="text-center" style="vertical-align: middle; cursor:pointer">2</td>
+						<td class="text-center" style="vertical-align: middle; cursor:pointer">1</td>
+						<td class="text-center" style="vertical-align: middle; cursor:pointer">4</td>
+						<td class="text-center" style="vertical-align: middle; cursor:pointer">3</td>
+						<td class="text-center" style="vertical-align: middle; cursor:pointer">4</td>
+						<td class="text-center" style="vertical-align: middle; cursor:pointer">3</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	
+	</div>
+</body>
+</html>

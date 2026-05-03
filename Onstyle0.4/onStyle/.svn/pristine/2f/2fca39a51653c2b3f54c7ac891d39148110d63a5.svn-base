@@ -1,0 +1,78 @@
+package net.su.consmr.ordr.controller;
+
+import java.util.List;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.stereotype.Controller;
+
+import net.su.consmr.mem.vo.MemVO;
+import net.su.consmr.ordr.service.OrdrService;
+import net.su.consmr.ordr.vo.OrdrVO;
+import net.su.consmr.ordr.vo.EcashVO;
+import net.su.consmr.ordr.vo.OrderBreakdwnVO;
+
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import net.su.logger.Logger;
+
+@Controller
+public class OrdrController {
+   @Resource
+   private OrdrService ordrService;
+   
+//   마이페이지에서 주문조회(주문내역조회)로
+   @RequestMapping(value = "/orderlist.do", method = {RequestMethod.GET, RequestMethod.POST})
+   public String orderlist(Model model, OrderBreakdwnVO odBerkvo, HttpSession session)throws Exception {
+      Logger.info("마이페이지에서 주문조회로 ");
+      MemVO memseqvo = new MemVO();
+      memseqvo = (MemVO)session.getAttribute("memVO");
+      odBerkvo.setMem_seq(memseqvo.getMem_seq());
+      List<OrderBreakdwnVO> odBreakList = ordrService.allselect(odBerkvo);
+      model.addAttribute("ordrList", odBreakList);
+      return "consmrView/ordr/OrderList";
+   }
+//   마이페이지에서 주문조회(취소/교환/반품 주문내역조회)로
+   @RequestMapping(value = "/odexchangelist.do", method = {RequestMethod.GET, RequestMethod.POST})
+   public String odexchange(Model model, OrderBreakdwnVO odBerkvo, HttpSession session) throws Exception {
+      Logger.info("마이페이지에서 주문조회(취소/교환/반품 주문내역조회)");
+      return "consmrView/ordr/OdExchangeList";
+   }
+//   주문조회에서 주문상세조회로
+   @RequestMapping(value = "/orderetail.do", method = {RequestMethod.GET, RequestMethod.POST})
+   public String odbreakdetail(Model model, OrderBreakdwnVO odBerkvo, HttpSession session) throws Exception {
+      Logger.info("주문조회에서 주문상세조회로 "); 
+      MemVO memseqvo = new MemVO();
+      memseqvo = (MemVO)session.getAttribute("memVO");
+      odBerkvo.setMem_seq(memseqvo.getMem_seq());
+      odBerkvo.setMem_name(memseqvo.getMem_name());
+      
+      List<OrderBreakdwnVO> odbkList = ordrService.odbreakdetail(odBerkvo);
+      session.setAttribute("odbdetail", odbkList);
+      return "consmrView/ordr/OrderInformation";
+   }
+//   주문결제하기
+   @RequestMapping(value = "/orderStart.do", method = {RequestMethod.GET, RequestMethod.POST})
+   public String orderStart(Model model)throws Exception {
+      
+      return "consmrView/ordr/OrderStart";
+   }
+   
+ //	마이페이지에서 적립금 으로 
+	@RequestMapping(value = "/point.do", method = {RequestMethod.GET, RequestMethod.POST})
+	public String point(Model model, EcashVO ecashvo, HttpSession session) throws Exception {
+		Logger.info("마이페이지에서 적립금으로 ");
+		MemVO memseqvo = new MemVO();
+		memseqvo = (MemVO)session.getAttribute("memVO");
+		ecashvo.setMem_seq(memseqvo.getMem_seq());
+		
+		List<EcashVO> pointList = ordrService.poinselect(ecashvo);
+		model.addAttribute("pointList", pointList);
+		return "consmrView/mem/Points";
+	}
+   
+   
+}

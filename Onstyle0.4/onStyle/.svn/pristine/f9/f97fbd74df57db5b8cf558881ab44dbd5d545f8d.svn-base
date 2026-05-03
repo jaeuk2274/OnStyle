@@ -1,0 +1,15 @@
+package net.su.admin.prodct.service;
+
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+
+import net.su.admin.prodct.vo.AdminProdctVO;
+import net.su.consmr.prodct.vo.ProdctVO;
+
+public interface AdminProdctService {
+	//상품코드조회
+	public ProdctVO selectProdctCode() throws Exception;
+	//상품등록
+	public void adminProdctInsert(MultipartHttpServletRequest request, ProdctVO prodctVO) throws Exception;
+	
+	
+}

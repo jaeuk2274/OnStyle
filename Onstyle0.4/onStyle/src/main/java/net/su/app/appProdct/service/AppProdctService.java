@@ -1,0 +1,11 @@
+package net.su.app.appProdct.service;
+
+import java.util.List;
+
+import net.su.consmr.prodct.vo.ProdctVO;
+
+public interface AppProdctService {
+	
+	//상품 전체 조회
+	public List<ProdctVO> prodctSelect(ProdctVO prodctVO) throws Exception;
+}

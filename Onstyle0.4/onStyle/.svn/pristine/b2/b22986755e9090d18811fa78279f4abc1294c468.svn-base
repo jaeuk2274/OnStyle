@@ -1,0 +1,5 @@
+package net.su.admin.mem.vo;
+
+public class AdminMemVO {
+
+}

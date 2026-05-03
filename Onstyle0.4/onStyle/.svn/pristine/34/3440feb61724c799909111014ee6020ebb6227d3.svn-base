@@ -1,0 +1,13 @@
+package net.su.consmr.login.service;
+
+import net.su.consmr.mem.vo.MemVO;
+
+
+
+public interface LoginService {
+
+   public MemVO memLogin(MemVO memVO) throws Exception;
+      
+   public void memberInsert(MemVO memVO) throws Exception;
+   
+}

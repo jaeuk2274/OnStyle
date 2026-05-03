@@ -1,0 +1,212 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+   <!-- consmrMenu css, js 링크 모아 놓은곳 -->
+<%@ include file="/WEB-INF/include/include-header.jspf" %>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <!-- 내가 만든 다양한 꾸밈요소들 불러오기 ㅇㅅㅇ -->
+<link rel="stylesheet" href="/resources/consmr/mem/css/PasswordJoin.css">
+<link rel="stylesheet" href="/resources/consmr/mem/css/selectView.css">
+
+<title>회원정보 화면</title>
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+</head> 
+<script type="text/javascript">
+function myhome(){
+	window.location.href="/mypageHome.do";
+}
+function upFinish(){
+	var formData = $("#jo").serialize();
+	$.ajax({
+	   url: "/upFinish.do",
+	   data: formData,
+	   type: 'POST',
+	   success:function(data){
+	      alert("수정이완료되었습니다.");
+	      $("#pw").val('');
+//             $("#birth").val(data.mem_birth);
+//             $("#postcd").val(data.mem_postcd);
+//             $("#adrs").val(data.mem_adrs);
+//             $("#detail_adrs").val(data.detail_adrs);
+//             $("#ph").val(data.mem_ph);
+//             $("#email").val(data.mem_email);
+	   },
+	   error:function(xhr,status,error){ //ajax 오류인경우  
+	      alert("error\nxhr : " + xhr + ", status : " + status + ", error : " + error);       
+	   }
+	});
+//       document.jo.action ="/upFinish.do";
+//       document.jo.submit();
+//       window.location.href="/upFinish.do";
+}
+//주소 불러오기
+function sample6_execDaumPostcode() {
+    new daum.Postcode({
+        oncomplete: function(data) {
+            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+            // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+            // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+            var fullAddr = ''; // 최종 주소 변수
+            var extraAddr = ''; // 조합형 주소 변수
+
+            // 사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+            if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                fullAddr = data.roadAddress;
+
+            } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                fullAddr = data.jibunAddress;
+            }
+
+            // 사용자가 선택한 주소가 도로명 타입일때 조합한다.
+            if(data.userSelectedType === 'R'){
+                //법정동명이 있을 경우 추가한다.
+                if(data.bname !== ''){
+                    extraAddr += data.bname;
+                }
+                // 건물명이 있을 경우 추가한다.
+                if(data.buildingName !== ''){
+                    extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                }
+                // 조합형주소의 유무에 따라 양쪽에 괄호를 추가하여 최종 주소를 만든다.
+                fullAddr += (extraAddr !== '' ? ' ('+ extraAddr +')' : '');
+            }
+
+            // 우편번호와 주소 정보를 해당 필드에 넣는다.
+            document.getElementById('sample6_postcode').value = data.zonecode; //5자리 새우편번호 사용
+            document.getElementById('sample6_address').value = fullAddr;
+            document.getElementById('sample6_address2').value = '';
+
+            // 커서를 상세주소 필드로 이동한다.
+            document.getElementById('sample6_address2').focus();
+        }
+    }).open();
+}
+</script>
+<body>
+	<div>
+		<c:import url="/menu.do"/>
+	</div>
+	<div class="mainContainer">
+		<div style="width:1150px; height:50px; padding-top:19px; text-align: center;" class="center-block"> <!-- padding-top:19px;을 해서 위아래 간격줌 -->
+		<font style="font-weight:bold; font-size:x-large; "> JOIN </font>
+	</div>
+	<br>
+	<div>
+		<font style="font-weight:bold; font-size:medium;"> 기본정보 </font>
+		<font style="font-size:small; float:right;">필수입력사항 </font>
+		<font style="font-size:small; float:right; color:red;">*</font>
+	</div>
+	<div class="board view view_v2"><!--view_v2-->
+		<form name="jo" id="jo" method="post">
+		<input type="hidden" name="mem_seq" value="${memship.mem_seq}">
+		<table class="basicT" summary="회원정보">
+		<thead></thead>
+			<tbody>
+				<tr>
+					<th scope="row" id="allow">아이디</th>
+					<td colspan="6" headers="allow" class="copyT" style="text-align:left; padding-left:10px;">${memship.mem_id}</td>
+				</tr>
+				<tr>
+					<th scope="row" id="allow">
+						비밀번호
+						<font style="font-size:small;color:red;">*</font>
+					</th>
+					<td colspan="6" headers="allow" class="copyT">
+						<input type="password" id="pw" name="mem_pw" class="textbox" style="padding-left:10px;" value="">  
+					</td>
+				</tr>
+				<tr>
+					<th scope="row" id="allow">이름</th>
+					<td colspan="6" headers="allow" class="copyT" style="text-align:left; padding-left:10px;">${memship.mem_name}</td>
+				</tr>
+				<tr>
+					<th scope="row" id="allow">닉네임</th>
+					<td colspan="6" headers="allow" class="copyT" style="text-align:left; padding-left:10px;">${memship.mem_nicknme}</td>
+				</tr>
+				<tr>
+					<th scope="row" id="allow">생년월일</th>
+					<td colspan="6" headers="allow" class="copyT">
+						<input type="text" class="textbox" id="birth" name="mem_birth" style="width:10%; text-align: right; float:left" value="${memship.mem_birth}">
+						<font style="margin-top:10px; padding-left:10px; float:left"><b>년</b></font>
+						<input type="text" class="textbox" id="birth" name="mem_birth" style="width:10%; text-align: right; float:left" value=""> 
+						<font style="margin-top:10px; padding-left:10px; float:left"><b>월</b></font>
+						<input type="text" class="textbox" id="birth" name="mem_birth" style="width:10%; text-align: right; float:left" value=""> 
+						<font style="margin-top:10px; padding-left:10px; float:left"><b>일</b></font>
+					</td>
+				</tr>
+				<tr>
+					<th style="height:150px;" scope="row" id="allow">
+						 주소
+						<font style="font-size:small;color:red;">*</font>
+					</th>
+					<td colspan="6" headers="allow" class="copyT">
+						<div style=" width:100%; height:40px; padding-left:10px;">
+							<input type="text" id="sample6_postcode" class="d_form mini" name="mem_postcd" style="width:10%; padding-left:10px; float:left;" value="${memship.mem_postcd}">
+							<div style="border:1px solid #ffffff; width:10px; padding-left:10px; float:left; "><!-- 빈얖 --></div>
+							<input type="button" onclick="sample6_execDaumPostcode()" style=" padding-left:10px; float:left;" value="우편번호 찾기" class="btn btn-default">
+						</div>
+						<div>
+							<input type="text" id="sample6_address" class="d_form std" name="mem_adrs" style="width: 30%; float:left; padding-left:10px;" value="${memship.mem_adrs}" >
+							<div style="border:1px solid #ffffff; width:10px; padding-left:10px; float:left; "><!-- 빈얖 --></div>
+							<input type="text" id="sample6_address2" class="d_form" name="mem_detail_adrs" style=" float:left;  padding-left:10px;" value="${memship.mem_detail_adrs}" >
+						</div>
+					</td>
+				</tr>
+			<tr>
+				<th>
+					휴대전화
+					<font style="font-size:small;color:red;">*</font>
+				</th>
+				<td colspan="6" headers="allow" class="copyT">
+					<select style="height: 37px; width:10%; padding-left:10px; float:left;">
+						<option value="010" selected>010</option>               
+						<option value="011">011</option>
+						<option value="016">016</option>             
+						<option value="017">017</option>
+						<option value="018">018t</option>
+						<option value="019">019</option>                  
+					</select>
+					<font style="margin-top:10px; padding-left:10px; float:left"><b>-</b></font>
+					<input type="text" class="textbox" id="" name="" style="width:10%; padding-left:10px; float:left;"> 
+					<font style="margin-top:10px; padding-left:10px; float:left"><b>-</b></font>
+					<input type="text" class="textbox" id="" name="" style="width:10%; padding-left:10px; float:left;"> 
+				</td>
+			</tr>
+			<tr>
+				<th scope="row" id="allow">
+					이메일 
+					<font style="font-size:small;color:red;">*</font>
+				</th>
+				<td colspan="6" headers="allow" class="copyT">
+					<input type="text" class="textbox" id="email" name="mem_email" style="width:20%; padding-left:10px; float:left;" value="${memship.mem_email}"> 
+					<font style="margin-top:10px; padding-left:10px; float:left"><b>@</b></font>
+					<input type="text" class="textbox" id="email" name="mem_email" style="width:20%; padding-left:10px; float:left;" value=""> 
+					<select style=" height:37px; width:30%; float:left;">
+						<option value="이메일선택" selected>- 이메일 선택 -</option>               
+						<option value="naver.com">naver.com</option>
+						<option value="daum.net">daum.net</option>             
+						<option value="nate.com">nate.com</option>
+						<option value="hanmail.net">hanmail.net</option>
+						<option value="gamil.com">gmail.com</option>
+						<option value="hotmail.com">hotmail.com</option>
+						<option value="lycos.co.kr">lycos.co.kr</option>
+						<option value="empal.com">empal.com</option>
+						<option value="dreamwiz.com">dreamwiz.com</option>
+						<option value="korea.com">korea.com</option>                   
+					</select>
+				</td>
+			</tr>
+			</tbody>
+		</table>
+		</form>
+	</div>
+	<br>
+	<br><br>
+	<button type="button" class="btn btn-info" onclick="upFinish()">회원정보수정</button>
+	<button type="button" class="btn btn-default" onclick="myhome()">돌아가기</button>
+	<button type="button" class="btn btn-default" style="float:right;" onclick="">회원탈퇴</button>
+	</div><!-- 없어지면안됨 -->
+</body>
+</html>

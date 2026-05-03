@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >   
+
+<mapper namespace="consmrMemMapper">
+   
+<!-- 로그인확인 -->
+   <select id="passCheck" parameterType="memVO" resultType="memVo">
+      SELECT         mem_seq
+      FROM         mem_tb
+      WHERE         mem_seq = #{mem_seq}
+      And            mem_pw = #{mem_pw}
+   </select>
+   
+<!-- join화면 정보 조회 -->
+   <select id="joinDetail" parameterType="memVO" resultType="memVo">
+      SELECT         mem_seq
+                  , mem_id
+                  , mem_pw
+                  , mem_name
+                  , mem_nicknme
+                  , mem_birth
+                  , mem_postcd
+                  , mem_adrs
+                  , mem_detail_adrs
+                  , mem_ph
+                  , mem_email
+                  
+      FROM         mem_tb
+      WHERE         mem_seq = #{mem_seq}
+   </select>
+
+<!-- join화면 정보 수정 ?! -->
+   <update id="upFinish" parameterType="memVO">
+      UPDATE          mem_tb
+      SET          mem_pw= #{mem_pw}
+                  , mem_birth = #{mem_birth}
+                  , mem_postcd = #{mem_postcd}
+                  , mem_adrs = #{mem_adrs}
+                  , mem_detail_adrs = #{mem_detail_adrs}
+                  , mem_ph = #{mem_ph} 
+                  , mem_email = #{mem_email}
+      WHERE          mem_seq = 1;
+   </update>
+</mapper>

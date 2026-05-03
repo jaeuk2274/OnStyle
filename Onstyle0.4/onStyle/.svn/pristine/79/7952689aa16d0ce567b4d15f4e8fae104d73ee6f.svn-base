@@ -1,0 +1,16 @@
+package net.su.app.appCodi.service;
+
+import javax.annotation.Resource;
+
+import net.su.app.appCodi.dao.appCodiReqstDAO;
+import net.su.logger.Logger;
+
+import org.springframework.stereotype.Service;
+
+@Service
+public class appCodiReqstServiceImpl implements appCodiReqstService{
+
+	@Resource	
+	appCodiReqstDAO appCodiReqstDao;
+	
+}

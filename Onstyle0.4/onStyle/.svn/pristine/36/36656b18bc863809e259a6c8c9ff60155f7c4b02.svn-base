@@ -1,0 +1,101 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
+<!DOCTYPE html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<!-- 화면 디자인에 필요한 CSS -->
+	<link href="/resources/admin/main/adminBootstrap/css/bootstrap.css" rel="stylesheet" type="text/css" />
+	<link href="/resources/assets/css/custom.min.css"/>
+	
+	<!-- 모코블링에서 가져온 좌측 바 -->
+	<link href="/resources/leftMenu.css" rel="stylesheet" type="text/css" />
+ 
+ 	<!-- 따온거라서 뭔지 모름. 지우면 어떤 기능이 안될 수도 -->
+	<script>
+		var _gaq = _gaq || [];
+		 _gaq.push(['_setAccount', 'UA-23019901-1']);
+		 _gaq.push(['_setDomainName', "bootswatch.com"]);
+		   _gaq.push(['_setAllowLinker', true]);
+		 _gaq.push(['_trackPageview']);
+		
+		(function() {
+		  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	
+	</script>
+    
+    
+</head>
+
+<body>	
+	<!-- 좌측 바 -->
+	<div id="aside" style = "width: 191px; background-color:#ffffff">
+		<div class="side_inner">
+			<div class="col-lg-3 col-md-3 col-sm-4" style = "width:190px; text-align:left; font-size:15px">
+            <div class="list-group table-of-contents">
+            	<c:if test="${menuCategry == 1}">
+					<p class="lead">상품관리</p>
+					<a class="list-group-item" href="#navbar">-&nbsp상품조회</a>
+					<a class="list-group-item" href="/adminProdctInsertPage.do">-&nbsp상품등록</a>
+					<a class="list-group-item" href="#typography">-&nbsp진열관리</a>   
+				</c:if>
+				<c:if test="${menuCategry == 2}">
+					<p class="lead">주문관리</p>
+					<a class="list-group-item" href="#">-&nbsp전체 주문 조회</a>
+					<a class="list-group-item" href="/creditList.do">-&nbsp입금 전 관리</a>
+					<a class="list-group-item" href="#buttons">-&nbsp상품 준비중 관리</a>
+					<a class="list-group-item" href="#typography">-&nbsp배송 준비중 관리</a>
+					<a class="list-group-item" href="#navbar">-&nbsp배송중 관리</a>
+					<a class="list-group-item" href="#buttons">-&nbsp배송완료 관리</a>
+					
+					<p class="lead" style="margin-top:30px">취소/교환/반품 관리</p>
+					<a class="list-group-item" href="#navbar">-&nbsp입금 전 취소 관리</a>
+					<a class="list-group-item" href="#navbar">-&nbsp입금 후 취소 관리</a>
+					<a class="list-group-item" href="#buttons">-&nbsp교환 관리</a>
+					<a class="list-group-item" href="#typography">-&nbsp반품 관리</a>
+				</c:if>
+				<c:if test="${menuCategry == 3}">
+					<p class="lead">코디요청관리</p>
+				</c:if>
+				<c:if test="${menuCategry == 4}">
+					<p class="lead">코디공유게시판</p>
+				</c:if> 
+				<c:if test="${menuCategry == 5}">
+					<p class="lead">매장관리</p>
+					<a class="list-group-item" href="#navbar">-&nbsp행사관리</a>
+					<a class="list-group-item" href="#buttons">-&nbsp배너관리</a>
+				</c:if> 
+				<c:if test="${menuCategry == 6}">
+					<p class="lead">고객관리</p>
+					<a class="list-group-item" href="#navbar">-&nbsp고객 전체 조회</a>
+					<a class="list-group-item" href="#buttons">-&nbsp코디 명예의 전당</a>
+					<a class="list-group-item" href="#typography">-&nbspQ&nbsp&&nbspA</a>
+				</c:if>            
+            </div>
+          </div>
+			<div class="bottom_ui">
+				<div class="scroll">
+					<span class="btn_scroll top" onclick="winScroll('top');"></span>
+					<span class="btn_scroll bottom" onclick="winScroll('bottom');"></span>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- JQuery -->
+	<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+	
+	<!-- 부트스트랩의  다양한 기능들을 구현 해놓은 js소스-->
+	<script src="/resources/admin/main/adminBootstrap/js/bootstrap.min.js"></script>
+	<script src="/resources/assets/js/custom.js"></script>
+	
+	<!-- 따온거라서 뭔지 모름. 지우면 어떤 기능이 안될 수도 -->
+	  <script>/* <![CDATA[ */(function(d,s,a,i,j,r,l,m,t){try{l=d.getElementsByTagName('a');t=d.createElement('textarea');for(i=0;l.length-i;i++){try{a=l[i].href;s=a.indexOf('/cdn-cgi/l/email-protection');m=a.length;if(a&&s>-1&&m>28){j=28+s;s='';if(j<m){r='0x'+a.substr(j,2)|0;for(j+=2;j<m&&a.charAt(j)!='X';j+=2)s+='%'+('0'+('0x'+a.substr(j,2)^r).toString(16)).slice(-2);j++;s=decodeURIComponent(s)+a.substr(j,m-j)}t.innerHTML=s.replace(/</g,'&lt;').replace(/\>/g,'&gt;');l[i].href='mailto:'+t.value}}catch(e){}}}catch(e){}})(document);/* ]]> */</script>
+
+</body>
+</html>

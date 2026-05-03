@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >	
+
+<mapper namespace="adminProdctMapper">
+	<insert id="prodctInsert" parameterType="prodctVo">
+		INSERT INTO prodct
+					(prodct_seq
+					, prodct_img_route1
+					, prodct_img_route2
+					, prodct_img_route3
+					, prodct_img_route4
+					, prodct_regtime
+					, prodct_nme
+					, admin_prodct_nme
+					, prodct_disply_state
+					, prodct_sell_state
+					, prodct_price
+					, suplr_price
+					, prodct_detail
+					, prodct_state
+					, client_seq
+					, category_seq )
+					
+		VALUES		(${prodct_seq}
+					, '${prodct_img_route1}'
+					, '${prodct_img_route2}'
+					, '${prodct_img_route3}'
+					, '${prodct_img_route4}'
+					, sysdate()
+					, '${prodct_nme}'
+					, '${admin_prodct_nme}'
+					, '${prodct_disply_state}'
+					, '${prodct_sell_state}'
+					, ${prodct_price}
+					, ${suplr_price}
+					, 'a'
+					, '${prodct_state}'
+					, ${client_seq}
+					, ${category_seq}
+					);
+	</insert>
+    <select id="selectProdctCode" resultType="prodctVo">
+    	SELECT ifnull(max(prodct_seq), 1)+1 as prodct_seq
+		FROM  prodct
+    </select>
+    
+</mapper>

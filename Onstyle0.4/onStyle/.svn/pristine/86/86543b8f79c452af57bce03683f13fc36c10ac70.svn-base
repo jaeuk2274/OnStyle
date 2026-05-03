@@ -1,0 +1,67 @@
+package net.su.consmr.prodct.vo;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class ShpbagVO extends ProdctVO  {
+   private int shpbag_seq;
+   private String shpbag_size;
+   private int shpbag_quanty;
+   private String shpbag_color;
+   private int prodct_seq;
+   private int mem_seq;
+   private String mem_name;
+   
+   private List<Integer> shpbag_seq_s;
+   
+   public List<Integer> getShpbag_seq_s() {
+	  return shpbag_seq_s;
+   }
+   public void setShpbag_seq_s(List<Integer> shpbag_seq_s) {
+	  this.shpbag_seq_s = shpbag_seq_s;
+   }
+   public int getShpbag_seq() {
+      return shpbag_seq;
+   }
+   public void setShpbag_seq(int shpbag_seq) {
+      this.shpbag_seq = shpbag_seq;
+   }
+   public String getShpbag_size() {
+      return shpbag_size;
+   }
+   public void setShpbag_size(String shpbag_size) {
+      this.shpbag_size = shpbag_size;
+   }
+   public int getShpbag_quanty() {
+      return shpbag_quanty;
+   }
+   public void setShpbag_quanty(int shpbag_quanty) {
+      this.shpbag_quanty = shpbag_quanty;
+   }
+   public String getShpbag_color() {
+      return shpbag_color;
+   }
+   public void setShpbag_color(String shpbag_color) {
+      this.shpbag_color = shpbag_color;
+   }
+   public int getProdct_seq() {
+      return prodct_seq;
+   }
+   public void setProdct_seq(int prodct_seq) {
+      this.prodct_seq = prodct_seq;
+   }
+   public int getMem_seq() {
+      return mem_seq;
+   }
+   public void setMem_seq(int mem_seq) {
+      this.mem_seq = mem_seq;
+   }
+   public String getMem_name() {
+      return mem_name;
+   }
+   public void setMem_name(String mem_name) {
+      this.mem_name = mem_name;
+   }
+   
+   
+}

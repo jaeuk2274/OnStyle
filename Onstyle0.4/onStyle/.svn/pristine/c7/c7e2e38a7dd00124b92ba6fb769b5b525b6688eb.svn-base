@@ -1,0 +1,81 @@
+// 체크박스 전체선택, 해제
+$(function(){
+	$("#chk_all").click(function(){
+		var chk = $(this).is(":checked");
+		if(chk) $("input:checkbox[name='chk']").prop("checked", true);
+		else  $("input:checkbox[name='chk']").prop("checked", false);
+	});
+});
+ 
+//코디요청 상세조회
+function reqstRead(reqstSeq){
+	window.location.href = "/reqstRead.do?codi_reqst_seq="+reqstSeq;
+}
+
+function checkReqstDelete(){
+	var reqstCheckGroup=[];
+	//체크박스 중 체크된 체크박스만 가져와서 Loop
+	$("input:checkbox[name=chk]:checked").each(function(i,elements){
+		reqstCheckGroup.push($(this).val());
+	});
+	if(reqstCheckGroup.length==0){
+		alert("1개 이상 체크해주세요.");
+		return;
+	}
+	var formData = "reqstCheckGroup="+reqstCheckGroup+"&location=0";
+	var wheather = confirm(reqstCheckGroup.length+"개 코디요청을 삭제하시겠습니까?");
+	if(wheather == true){
+		$.ajax({
+			type : "POST",
+			url : "/reqstDelete.do", 
+			data : formData,	 
+			success : function(data){
+				alert(data);
+			$("#reqstList tbody").html(data);
+			},
+			error:function(xhr,status,error){ 
+				alert("$");
+				alert("error\nxhr : " + xhr + ", status : " + status + ", error : " + error);
+			}
+		});
+	 }
+	 else {
+		 return;
+	 }
+}
+	
+function reqstSearch(){
+	var formData = $("#reqstFrm").serialize();
+	$.ajax({
+		type : "POST",
+		url : "/reqstList.do",
+		data : formData,	 
+		success : function(data){
+		$("#reqstList").html(data);
+		},
+		error:function(xhr,status,error){ 
+			alert("$");
+			alert("error\nxhr : " + xhr + ", status : " + status + ", error : " + error);
+		}
+	});
+}
+
+//페이징
+function paging(page){
+	var formData = $("#reqstFrm").serialize();
+	formData += "&currentPageNo="+page;
+	$.ajax({
+		type:"POST",
+		url: "/reqstList.do", // 테이블 조회
+		data: formData ,
+		success:function(data){
+			$("#reqstList").html(data);	
+			
+		},
+	    error:function(xhr,status,error)
+	    { 
+	    	alert("$");
+            alert("error\nxhr : " + xhr + ", status : " + status + ", error : " + error);       
+   		}
+	});
+}

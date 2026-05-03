@@ -1,0 +1,5 @@
+package net.su.consmr.main.dao;
+
+public class MainDAO {
+
+}

@@ -1,0 +1,28 @@
+package net.su.admin.prodct.service;
+
+import java.util.List;
+
+import javax.annotation.Resource;
+
+import net.su.admin.prodct.dao.AdminProdctDAO;
+import net.su.consmr.codi.vo.MyDressRoomVO;
+import net.su.consmr.prodct.vo.ProdctVO;
+import net.su.logger.Logger;
+
+import org.springframework.stereotype.Service;
+
+@Service
+public class AdminProdctServiceImpl implements AdminProdctService{
+
+	@Resource
+	private AdminProdctDAO adminProdctDao;
+	
+	public AdminProdctVO selectProdctCode() throws Exception{
+	      Logger.info("상품코드 조회");
+	      AdminProdctVO prodctVO = new ProdctVO();
+	      prodctVO = adminProdctDao.selectProdctCode();
+	      
+
+	      return prodctVO;
+	   }
+}

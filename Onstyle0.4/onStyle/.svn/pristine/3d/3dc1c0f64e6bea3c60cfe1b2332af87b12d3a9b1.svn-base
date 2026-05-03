@@ -1,0 +1,402 @@
+	function create_id_code(img_src, cloth_seq){
+		var bigGroup=$("input[name=bigGroup]").val();	//나의옷인지 미스봄상품인지 구별하기 위함
+		var bigCode = bigGroup.substring(0,1)
+		var id_code = bigCode+cloth_seq;
+		
+		img_click(img_src, cloth_seq, id_code);
+	}
+
+	var idCheck = new Array();
+	
+	// 상품 리스트에서 상품 클릭시 캔버스에 상품 생성 
+	function img_click(img_src, cloth_seq, id_code){
+		var cloth_id = "cloth_id"+id_code;
+		//중복선택 막기 위한 조건
+		for(i=0;i<idCheck.length;i++){
+			if (idCheck[i]==cloth_id){
+				alert("이미 선택된 옷입니다");
+				return false;
+			}
+		}
+		
+		idCheck.push(cloth_id);		//중복선택을 막기위해 선택한 옷 배열에 추가
+		
+		$('#canvas').append(""
+				+"<img class='in_canvas' id='"+cloth_id+"' src='"+img_src+"' style='width:250px; position:absolute; overflow:hidden;'>"
+				+"");		
+		
+		
+		
+		canvas_in_product(cloth_id, cloth_seq, img_src);		
+	}
+	
+	var index = 0;				//배열 index
+	var canvas_img_seq = [];	//옷 seq
+	var canvas_img_src = [];	//옷 이미지 경로
+	// 캔버스 안에서 상품 이동
+	function canvas_in_product(id, seq, img_src){
+		
+		canvas_img_seq[index] = id.substring(8);
+		canvas_img_src[index] = img_src;
+		index++
+		var o = $("#"+id);
+		 var sx, sy, dx, dy, ix, iy;
+		 var dragging = false;
+		
+		 $("#"+id).on('click', function(e) {	
+			 event.stopPropagation();
+			 
+			  item_info_display_on(id, seq);
+		  });
+		 
+		  $("#"+id).on('mousedown', function(e) {	 
+			e.preventDefault();
+			sx = e.pageX; //문서의 왼쪽 가장자리를 기준으로 마우스 위치의 X좌표(넓이) 값.
+			sy = e.pageY; //문서의 왼쪽 가장자리를 기준으로 마우스 위치의 Y좌표(높이) 값.
+			ix = $(o).offset().left; //Documet를 기준으로 한 엘리먼트의 위치 값
+			iy = $(o).offset().top;  //Documet를 기준으로 한 엘리먼트의 위치 값
+			dx=dy=0;
+			dragging = true;
+		  
+			
+			console.log("mousedown - s:",sx,sy,"/i:",ix,iy);
+		 }).on('mousemove', function(e) {
+			if(dragging) {
+		  	 $(o).css('position','absolute');
+		  	 $(o).css('overflow','hidden');
+		  	 $(o).css('z-index','1');
+		  	 
+			  dx = e.pageX - sx;
+			  dy = e.pageY - sy;
+			 
+			  $(o).offset({left: ix + dx, top: iy + dy});
+			}
+		 }).on('mouseup', function(e){ 
+			dx = e.pageX - sx;
+			dy = e.pageY - sy;
+			
+			dragging = false;
+			$(o).css('position','absolute');
+	 	 $(o).css('overflow','hidden');
+	 	 $(o).css('z-index','0');
+	 	 
+			$(o).offset({left: ix + dx, top: iy + dy});
+
+			console.log("mouseup - d:",dx,dy,"/i:",ix,iy);						
+		 }); 
+		  
+	}
+	
+	// 캔버스에서 상품 클릭시 상품 상세정보, 확대,축소,삭제 디스플레이
+	function item_info_display_on(id, seq){
+		var bigGroup = id.substring(8,9)
+		if(bigGroup=="m"){
+			formData = "myCloth_seq="+seq+"&bigGroup=myCloth";
+		} else if(bigGroup=="p"){
+			formData = "prodct_seq="+seq+"&bigGroup=prodct";	
+		}
+		
+		$.ajax({
+				type : "POST",
+				url : "/selectedClothRead.do", 
+				data : formData,	  
+				success : function(data){	
+					var bigGroup = data.bigGroup;
+					if(bigGroup=="myCloth"){
+						var img_src = "<img src="+data.myCloth_img_route+">";
+						
+						$("#item_info").css('display','block');
+						$("#info_thumb").html(img_src);
+						$("#info_title").html("");
+					$("#price").html("");
+						
+					} else if(bigGroup=="prodct"){
+						alert(data.prodct_seq);
+						var img_src = "<img src="+data.prodct_img_route1+">";
+						var name ="<a href='javascript:prodct_read("+data.prodct_seq+")'>"+data.prodct_nme+"</a>";
+						var price =data.prodct_price;
+					
+					$("#item_info").css('display','block');
+					$("#info_thumb").html(img_src);
+					$("#info_title").html(name);
+					$("#price").html(price);
+					}
+				},
+				error:function(xhr,status,error){ 
+					 alert("$");
+					 alert("error\nxhr : " + xhr + ", status : " + status + ", error : " + error);
+				}
+		  });
+		
+		var img_src = $("#"+id).attr("src");
+		
+
+		$("#layer_down").attr('onclick', 'javascript:layer_down("'+id+'", "'+img_src+'", "'+seq+'")');
+		$("#layer_up").attr('onclick', 'javascript:layer_up("'+id+'", "'+img_src+'", "'+seq+'")');
+		$("#layer_plus").attr('onclick', 'javascript:layer_plus("'+id+'")');
+		$("#layer_minus").attr('onclick', 'javascript:layer_minus("'+id+'")');
+		$("#layer_delete").attr('onclick', 'javascript:layer_delete("'+id+'", "'+img_src+'", "'+seq+'")');
+	}
+	
+	//맨 아래로
+	function layer_down(id, img_src, seq){
+		var finalSeq = new Array();
+		var finalSrc = new Array();
+		var selectedSeq = new Array();
+		var selectedSrc = new Array();
+		var elseSeq = new Array();
+		var elseSrc= new Array();
+		var top = new Array();
+		var left = new Array();
+		var width = new Array();
+		
+		//선택한 옷과 나머지 옷을 순서대로 배열에 나눠 담기
+		for(var i=0 ; i<canvas_img_seq.length; i++){
+			if(id.substring(8) == canvas_img_seq[i])
+			{
+				selectedSeq.push(canvas_img_seq[i]);
+				selectedSrc.push(canvas_img_src[i]);
+			}
+			else{
+				elseSeq.push(canvas_img_seq[i]);
+				elseSrc.push(canvas_img_src[i]);
+				
+			}
+		}
+		finalSeq = selectedSeq.concat(elseSeq); // 선택한 옷 >> 나머지 옷 순서로 옷 seq 담기
+		finalSrc = selectedSrc.concat(elseSrc); // 선택한 옷 >> 나머지 옷 순서로 이미지 src 담기
+		
+
+		//변경 전 위치 값 가져오기		
+		for (var i=0; i<finalSeq.length; i++){
+			top.push($("#cloth_id"+finalSeq[i]).css('top'));
+			left.push($("#cloth_id"+finalSeq[i]).css('left'));
+			width.push($("#cloth_id"+finalSeq[i]).css('width'));
+		}
+		
+		$("#canvas").empty();
+		for(var i=0 ; i<finalSeq.length; i++)
+		{
+			if(i == 0)
+			{
+				index = 0;
+				canvas_img_seq = [];
+				canvas_img_src = [];
+				idCheck = [];
+			}
+			
+			var id_code = finalSeq[i];
+			var cloth_seq = finalSeq[i].substring(1);
+			var img_src = finalSrc[i];
+			
+			img_click(img_src, cloth_seq, id_code);
+			
+			$("#cloth_id"+finalSeq[i]).css('top',top[i]);
+			$("#cloth_id"+finalSeq[i]).css('left',left[i]);
+			$("#cloth_id"+finalSeq[i]).css('width',width[i]);
+		}						
+	}
+	
+	//맨 위로
+	function layer_up(id, img_src, seq){
+		var finalSeq = new Array();
+		var finalSrc = new Array();
+		var selectedSeq = new Array();
+		var selectedSrc = new Array();
+		var elseSeq = new Array();
+		var elseSrc= new Array();
+		var top = new Array();
+		var left = new Array();
+		var width = new Array();
+		
+		//선택한 옷과 나머지 옷을 순서대로 배열에 나눠 담기
+		for(var i=0 ; i<canvas_img_seq.length; i++){
+			if(id.substring(8) == canvas_img_seq[i]){
+				selectedSeq.push(canvas_img_seq[i]);
+				selectedSrc.push(canvas_img_src[i]);
+			}
+			else{
+				elseSeq.push(canvas_img_seq[i]);
+				elseSrc.push(canvas_img_src[i]);
+			}
+		}
+		finalSeq = elseSeq.concat(selectedSeq); // 나머지 옷 >> 선택한 옷 순서로 옷 seq 담기
+		finalSrc = elseSrc.concat(selectedSrc); // 나머지 옷 >> 선택한 옷 순서로 이미지 src 담기
+		
+		//변경 전 위치 값 가져오기		
+		for (var i=0; i<finalSeq.length; i++){
+			top.push($("#cloth_id"+finalSeq[i]).css('top'));
+			left.push($("#cloth_id"+finalSeq[i]).css('left'));
+			width.push($("#cloth_id"+finalSeq[i]).css('width'));
+		}
+		
+		$("#canvas").empty();
+		for(var i=0 ; i<finalSeq.length; i++)
+		{
+			if(i == 0)
+			{
+				index = 0;
+				canvas_img_seq = [];
+				canvas_img_src = [];
+				idCheck = [];
+			}
+			
+			var id_code = finalSeq[i];
+			var cloth_seq = finalSeq[i].substring(1);
+			var img_src = finalSrc[i];
+			
+			img_click(img_src, cloth_seq, id_code);
+			
+			$("#cloth_id"+finalSeq[i]).css('top',top[i]);
+			$("#cloth_id"+finalSeq[i]).css('left',left[i]);
+			$("#cloth_id"+finalSeq[i]).css('width',width[i]);
+		}
+		
+	}
+	function layer_plus(id){
+		$("#"+id).width($("#"+id).width()+10); // width나 height 중에 하나만 건드려야 비율에 맞게 확대 or 축소 됨
+	}
+	function layer_minus(id){
+		$("#"+id).width($("#"+id).width()-10); // width나 height 중에 하나만 건드려야 비율에 맞게 확대 or 축소 됨
+	}
+	function layer_delete(id, img_src, seq){
+		idCheck.splice(idCheck.indexOf(id),1);
+		canvas_img_seq.splice(canvas_img_seq.indexOf(id.substring(8)),1);
+		canvas_img_src.splice(canvas_img_src.indexOf(img_src),1);
+		index--;
+		$("#"+id).remove();
+		$("#item_info").css('display','none');
+
+	}
+	
+	//코디저장
+	function  saveCodi(type){
+		var canvas ="";
+		var canvas_top = 0;
+		var canvas_left = 0;
+		var canvas_right = 0;
+		var canvas_bottom = 0;
+		var x = new Array();
+		var y = new Array();
+		var width = new Array();
+		
+		//완성된 코디 가로,세로 길이 구하기
+		for(i=0;i<canvas_img_seq.length;i++){
+			var id_code = canvas_img_seq[i]
+			var position = $("#cloth_id"+id_code).position();
+			x.push($("#cloth_id"+id_code).css('top'));
+			y.push($("#cloth_id"+id_code).css('left'));
+			width.push($("#cloth_id"+id_code).css('width')); 
+			
+			if(canvas_top >= position.top || canvas_top==0){
+				canvas_top = position.top;
+			}
+			if(canvas_left >= position.left || canvas_left==0){
+				canvas_left = position.left;
+			}
+			if(canvas_bottom <= (position.top+$("#cloth_id"+id_code).height())){
+				canvas_bottom = (position.top+$("#cloth_id"+id_code).height())
+			}
+			if(canvas_right <= (position.left+$("#cloth_id"+id_code).width())){
+				canvas_right = (position.left+$("#cloth_id"+id_code).width())
+			}
+		}
+		var canvas_width = (canvas_right - canvas_left);
+		var canvas_height = (canvas_bottom - canvas_top);
+		
+		//id=canvas인 DIV를 코디 크기에 맞게 가로,세로,높이 설정
+		$("#canvas").attr('style','position:absolute; width:'+canvas_width+'px; height:'+canvas_height+'px;');
+		
+		//코디를 canvas가 위치한 곳으로 잠시 이동
+		for(i=0;i<canvas_img_seq.length;i++){
+			var id = canvas_img_seq[i]
+			
+			var position_top = $("#cloth_id"+id).position().top
+			var position_left = $("#cloth_id"+id).position().left
+			var ceilTop = Math.ceil(position_top);
+			var ceilLeft = Math.ceil(position_left);
+			var ceilCanvas_top= Math.ceil(canvas_top);
+			var ceilCanvas_left= Math.ceil(canvas_left);
+			
+			var top = ((ceilTop)-(ceilCanvas_top));
+			var left = ((ceilLeft)-(ceilCanvas_left));
+			
+			$("#cloth_id"+id).css('top',top);
+			$("#cloth_id"+id).css('left',left);
+		}
+		html2canvas($("#canvas"), {
+
+		onrendered: function(canvas) {
+			$("input[type=hidden][name=codi_img_route]").val(canvas.toDataURL("image/png"));
+			var formData = $("#codiInsertForm").serialize();
+			$("#canvas").removeAttr('style');
+			for(i=0;i<canvas_img_seq.length;i++){
+				var id_code = canvas_img_seq[i]
+				$("#cloth_id"+id_code).css('top',x[i]);
+				$("#cloth_id"+id_code).css('left',y[i]);
+				$("#cloth_id"+id_code).css('width',width[i]);
+			}
+			formData += "&xpoint_list="+x+"&ypoint_list="+y+"&width_list="+width+"&canvas_img_seq="+canvas_img_seq+"&codiSaveType="+type;
+			$.ajax({
+					type : "POST",
+					url : "/insertCodi.do",
+					data : formData,		
+					success : function(codi_seq){
+					//type >> 0:사용자가 코디 요청, 1:내가 직접 만든 코디 , 3:내가 만든 코디 수정, 4:관리자 코디 답변
+					switch (type) {
+						case 1	:	alert("코디가 저장 되었습니다.");
+									break;
+						
+						case 3	:	alert("수정이 완료 되었습니다.");
+									
+									if($("input[name=readPageNme]").val()=="mycloth"){
+										location.href = '/codiRead.do?codi_seq='+codi_seq;
+									} else if($("input[name=readPageNme]").val()=="reqst"){
+										location.href = '/reqstRead.do?codi_reqst_seq='+$("input[name=codi_reqst_seq]").val();
+									} else if($("input[name=readPageNme]").val()=="answr"){
+										location.href = '/adminCodiReqstRead.do?codi_reqst_seq='+$("input[name=codi_reqst_seq]").val();
+									}
+									
+									break;
+									
+						case 4	:	alert("답변완료");
+									location.href = '/adminCodiReqst.do';
+									break;
+									
+						case 0  : 	alert("코디요청이 접수 되었습니다.");
+									location.href = '/reqstbreakdwn.do';
+									break;
+					}
+//					if(type==1){
+//						alert("코디가 저장 되었습니다.");
+//					} else if(type==3){
+//						alert("수정이 완료 되었습니다.");
+//						if($("input[name=readPageNme]").val()=="mycloth"){
+//							location.href = '/codiRead.do?codi_seq='+codi_seq;
+//						} else if($("input[name=readPageNme]").val()=="reqst"){
+//							location.href = '/reqstRead.do?codi_reqst_seq='+$("input[name=codi_reqst_seq]").val();
+//						}
+//					} else if(type==0){
+//						alert("코디요청이 접수 되었습니다.");
+//						location.href = '/reqstbreakdwn.do';
+//					}
+					},
+					error:function(xhr,status,error){ 
+						 alert("$");
+						 alert("error\nxhr : " + xhr + ", status : " + status + ", error : " + error);
+					}
+			  });
+	  
+		}
+		});
+	}
+
+	//마우스 휠
+	// onmousewheel='clothSize(this)'
+//	function clothSize(id){
+//		event.stopPropagation();
+//		var zoom=parseInt(id.style.zoom,10)||100;
+//		zoom+=event.wheelDelta/12;
+//		if (zoom>0) id.style.zoom=zoom+'%';
+//		return false;
+//	}

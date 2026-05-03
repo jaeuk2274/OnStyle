@@ -1,0 +1,9 @@
+package net.su.admin.ordr.dao;
+
+import org.mybatis.spring.support.SqlSessionDaoSupport;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public class AdminOrdrDAO extends SqlSessionDaoSupport{
+
+}

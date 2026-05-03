@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >   
+
+<mapper namespace="consmrOrdrMapper">   
+   <!-- 주문조회(주문내역조회) -->
+   <select id="allselect" parameterType="odBerkVo" resultType="odBerkVo">
+      SELECT       mem_seq
+                , order_date
+                , prodct_img_route1
+                , prodct_nme
+                , order_breakdwn_prodct_quanty
+                , order_sum
+                , order_state
+                , od.order_seq AS order_seq
+                   
+      FROM        order_breakdwn_tb ok
+               , order_tb od
+               , prodct pd
+               
+      WHERE       ok.order_seq = od.order_seq
+      AND         ok.prodct_seq = pd.prodct_seq
+      AND         mem_seq = #{mem_seq}
+      <choose>
+          <when test = "oneDatepicker !=null or twoDatepicker !=null">
+             AND   order_date between #{oneDatepicker} and #{twoDatepicker};
+          </when>
+       </choose>
+   </select>
+   <!-- 주문 상세보기조l -->
+   <select id="odbreakdetail" parameterType="odBerkVo" resultType="odBerkVo">
+      SELECT  od.order_seq
+            , order_date
+            , me.mem_name AS mem_name
+            , order_dlivy_num
+            , order_paree
+            , mem_ph
+            , od.mem_adrs AS mem_adrs
+            , order_msg
+            , prodct_nme
+            , order_breakdwn_prodct_quanty
+            , pd.prodct_price AS prodct_price
+            , order_state
+            
+      FROM    order_breakdwn_tb ok
+            , order_tb od
+            , prodct pd
+            , mem_tb me
+            
+      WHERE   ok.order_seq = od.order_seq
+      AND     ok.prodct_seq = pd.prodct_seq
+      AND     me.mem_seq = od.mem_seq
+      AND      od.order_seq = #{order_seq};
+   </select>
+    <!-- 적립금조회 -->
+	<select id="poinselect" parameterType="ecashVo" resultType="ecashVo">
+		SELECT		od.order_date
+					, ea.ecash_acc
+					, od.order_seq as order_seq
+					, ecash_msg
+		FROM  		order_tb od
+					, ecash_tb ea 
+		WHERE  		od.mem_seq = ea.mem_seq
+		AND  		od.mem_seq = #{mem_seq};
+	</select>
+</mapper>

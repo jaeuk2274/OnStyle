@@ -1,0 +1,144 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/include/include-header.jspf" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title> 입금전 관리 </title>
+<style>
+.btnjin {
+  color: #ffffff;
+  background-color: #C6C6C6;
+  border-color: transparent;
+}
+</style>
+<!--  jQuery UI 라이브러리 js파일 -->
+	<script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+<!-- 내가 만든 달력 제이쿼리 불러오기 ㅇㅅㅇ -->  
+	<script src=/resources/consmr/mem/js/orderList.js></script>
+<!-- 내가 만든 다양한 꾸밈요소들 불러오기 ㅇㅅㅇ -->
+	<link rel="stylesheet" href="/resources/consmr/mem/css/OrderList.css">
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" type="text/css"/>
+	
+	
+	
+	<!-- 내가 쓰는 꾸밈요소 -->
+	<link rel="stylesheet" href="/resources/consmr/mem/css/selectView.css">
+	
+</head>
+<body>
+<!-- 상단바 -->
+	<div>
+		<c:import url="/adminTopMenu.do"/>
+	</div>
+<!-- 좌측 바 -->
+	<div>
+		<c:import url="/adminLeftMenu.do?menuCategry=2"/>
+	</div>
+<!-- 본인 디자인은 여기 안에서 -->
+	<div class="mainContainer">
+		<div class="container" style="width:80%; margin:0 auto; border:1px solid black">
+			<div class="col-md-12">
+				<h4>입금 전 관리</h4>
+				<hr>
+			</div>
+			<div style="text-align:right;">
+				<span class="glyphicon glyphicon-ok"> </span>
+				<b>검색</b> 버튼을 꼭 눌러주세요!
+			</div>
+			<div class="board view view_v2"><!--view_v2-->
+				<table class="basicT" summary="주문관리">
+				<thead></thead>
+					<tbody>
+						<tr>
+							<th scope="row" id="allow" style="width:10%;">검색어</th>
+							<td>ㅇㅅㅇ</td>
+						</tr>
+						<tr>
+							<th scope="row">검색어</th>
+							<td>ㅇㅅㅇ2</td>
+						</tr>
+						<tr>
+							<th scope="row">기간</th>
+							<td>
+								<form name="ord" id="ord" method="POST">
+									<input class="btn btn-default" type="button" value="오늘" id="today"> &nbsp;
+									<input class="btn btn-default" type="button" value="1주일" id="oneweek">&nbsp;
+									<input class="btn btn-default" type="button" value="1개월" id="month">&nbsp;
+									<input class="btn btn-default" type="button" value="3개월" id="trimester">&nbsp;
+									<input class="btn btn-default" type="button" value="6개월" id="halfyear">&nbsp;&nbsp;
+									<input type="text" id="oneDatepicker" name="oneDatepicker"> &nbsp;&nbsp; ~ &nbsp;&nbsp;
+									<input type="text" id="twoDatepicker" name="twoDatepicker">
+									<button type="button" class="btn btn-info" onclick="" style="margin-left:15px;">조회</button>
+								</form>
+							</td>
+						</tr>
+						<tr>
+							<th scope="row">입금상태</th>
+							<td>ㅇㅅㅇ1</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div style="width:100%; height:30px;"><!-- 빈얖 --></div>
+			<div style="width:100%; height:50px;">
+				<center>
+					<button class="btn btn-default">검색</button>
+					<button class="btn btn-default">초기화</button>
+				</center>
+			</div>
+			<font><b>º 검색결과</b></font>
+			<div style="border:1px solid #EAEAEA; width:100%; height:40px;">
+				<div style="border:1px solid #FCFCFC; width:25%; height:40px;">
+					<select class="form-control" id="select">
+						<option>주문일 순</option>
+						<option>주문일 역순</option>
+						<option>입금여부 순</option>
+						<option>입금여부 역순</option>
+						<option>5</option>
+					</select>
+				</div>
+			</div>
+			<br>
+			<div class="board view view_v2">
+				<table class="basicT" id="store" summary="배송상품">
+				<thead></thead>
+					<th colspan="7">
+						<a href="#" class="btn btnjin btn-xs"> 입금 전 </a>
+						<a href="#" class="btn btnjin btn-xs"> 입금확인 </a>
+						<a href="#" class="btn btnjin btn-xs"> 상품준비중 </a>
+					</th>
+					<tr>
+						<td style="text-align: center;">
+							<input type="checkbox" name="checkAll" id="">
+						</td>
+						<td style="text-align: center;">주문번호</td>
+						<td style="text-align: center;">상품명</td>
+						<td style="text-align: center;">주문자</td>
+						<td style="text-align: center;">입금자</td>
+						<td style="text-align: center;">입금금액</td>
+						<td style="text-align: center;">처리여부</td>
+					</tr>
+					<tr>
+						<td style="text-align: center;">
+							<input type="checkbox" name="checkRow" id="">
+						</td>
+						<td style="text-align: center;">주문번호1</td>
+						<td style="text-align: center;">상품명1</td>
+						<td style="text-align: center;">주문자1</td>
+						<td style="text-align: center;">입금자1</td>
+						<td style="text-align: center;">입금금액1</td>
+						<td style="text-align: center;">처리여부1</td>
+					</tr>
+					<th colspan="7">
+						<a href="#" class="btn btnjin btn-xs"> 입금 전 </a>
+						<a href="#" class="btn btnjin btn-xs"> 입금확인 </a>
+						<a href="#" class="btn btnjin btn-xs"> 상품준비중 </a>
+					</th>
+				</table>
+			</div>
+			<div style="width:100%; height:30px;"><!-- 빈얖 --></div>
+		</div><!-- 지워지면안됨 -->
+	</div><!-- 지워지면안됨 -->
+</body>
+</html>

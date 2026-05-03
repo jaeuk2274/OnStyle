@@ -1,0 +1,112 @@
+package net.su.consmr.ordr.vo;
+
+import net.su.consmr.prodct.vo.ProdctVO;
+
+public class OrdrVO extends ProdctVO{
+   
+   private int order_seq;
+   private String order_date;
+   private String order_state;
+   private int order_dlivy_num;
+   private String order_methd;
+   private int order_sum;
+   private int order_use_ecash_sum;
+   private String mem_postcd;
+   private String mem_adrs;
+   private String mem_detail_adrs;
+   private String order_msg;
+   private int mem_seq;
+   private String mem_name;
+   private String order_paree;
+   
+   public int getOrder_seq() {
+      return order_seq;
+   }
+   public void setOrder_seq(int order_seq) {
+      this.order_seq = order_seq;
+   }
+   public String getOrder_date() { 
+      return order_date; 
+   }
+   public void setOrder_date(String order_date) {
+      this.order_date = order_date;
+   }
+   public String getOrder_state() {
+      return order_state;
+   }
+   public void setOrder_state(String order_state) {
+      this.order_state = order_state;
+   }
+   public int getOrder_dlivy_num() {
+      return order_dlivy_num;
+   }
+   public void setOrder_dlivy_num(int order_dlivy_num) {
+      this.order_dlivy_num = order_dlivy_num;
+   }
+   public String getOrder_methd() {
+      return order_methd;
+   }
+   public void setOrder_methd(String order_methd) {
+      this.order_methd = order_methd;
+   }
+   public int getOrder_sum() {
+      return order_sum;
+   }
+   public void setOrder_sum(int order_sum) {
+      this.order_sum = order_sum;
+   }
+   public int getOrder_use_ecash_sum() {
+      return order_use_ecash_sum;
+   }
+   public void setOrder_use_ecash_sum(int order_use_ecash_sum) {
+      this.order_use_ecash_sum = order_use_ecash_sum;
+   }
+   public String getMem_postcd() {
+      return mem_postcd;
+   }
+   public void setMem_postcd(String mem_postcd) {
+      this.mem_postcd = mem_postcd;
+   }
+   public String getMem_adrs() {
+      return mem_adrs;
+   }
+   public void setMem_adrs(String mem_adrs) {
+      this.mem_adrs = mem_adrs;
+   }
+   public String getMem_detail_adrs() {
+      return mem_detail_adrs;   
+   }
+   public void setMem_detail_adrs(String mem_detail_adrs) {
+      this.mem_detail_adrs = mem_detail_adrs;
+   }
+   public String getOrder_msg() {
+      return order_msg;   
+   }
+   public void setOrder_msg(String order_msg) {
+      this.order_msg = order_msg;
+   }
+   public int getMem_seq() {
+      return mem_seq;
+   }
+   public void setMem_seq(int mem_seq) {
+      this.mem_seq = mem_seq;
+   }
+   public String getMem_name() {
+      return mem_name;
+   }
+   public void setMem_name(String mem_name) {
+      this.mem_name = mem_name;
+   }
+   public String getOrder_paree() {
+      return order_paree;
+   }
+   public void setOrder_paree(String order_paree) {
+      this.order_paree = order_paree;
+   }
+   
+   
+   
+   
+   
+   
+}

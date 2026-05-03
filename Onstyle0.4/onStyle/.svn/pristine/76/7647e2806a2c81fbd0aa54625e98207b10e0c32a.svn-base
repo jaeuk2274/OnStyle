@@ -1,0 +1,54 @@
+/**
+ * 
+ */
+$(document).ready(function() {
+	
+  //체크박스 전체선택
+	$("#check").click(function(){ 
+	      var check = $("#check").is(":checked");
+	          if(check == true){
+	        	 $("input[name=check]:checkbox").prop("checked", true);
+	         }
+	         else{
+	        	 $("input[name=check]:checkbox").prop("checked", false);
+	         }
+	});
+
+	//진열순서변경
+	var ordered_items;
+	$("#disply").tableDnD({
+		//클래스 지정
+		onDragClass: "dragRow",
+		//드래그 한 후 드롭이벤트가 일어날 경우의 이벤트
+		onDrop: function(table, row){
+			ordered_items = $.tableDnD.jsonize();
+			console.log("워매!");
+		},
+		onDragStart:function(table, row){
+			console.log("시작");
+		}
+	});
+	
+	//진열순서변경 업데이트
+	$('#orderConfirm').click(function(){
+		if(ordered_items == null){
+			alert("변경된 진열 순서가 없습니다.");
+			console.log("실패");
+		}
+		else{
+			$.ajax({
+				type:"POST",
+				url:"/updateMainDisplayOrder.do",
+				data:ordered_items,
+				contentType: "application/json",
+				success:function(data){
+					location.reload();
+				},
+				error:function(request,status,error){
+			        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				}
+			});
+		}
+	});
+
+});

@@ -1,0 +1,17 @@
+package net.su.admin.prodct.dao;
+
+import net.su.admin.prodct.vo.AdminProdctVO;
+import net.su.consmr.prodct.vo.ProdctVO;
+
+import org.mybatis.spring.support.SqlSessionDaoSupport;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public class AdminProdctDAO extends SqlSessionDaoSupport{
+	
+	public ProdctVO selectProdctCode() throws Exception {
+		ProdctVO prodctVO = new AdminProdctVO();
+		prodctVO = getSqlSession().selectOne("adminProdctMapper.selectProdctCode");
+        return prodctVO;
+     }
+}

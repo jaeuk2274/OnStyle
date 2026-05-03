@@ -1,0 +1,14 @@
+package net.su.admin.prodct.service;
+
+import net.su.admin.prodct.vo.AdminProdctVO;
+import net.su.consmr.prodct.vo.ProdctVO;
+
+public interface AdminProdctService {
+	//상품코드조회
+	public AdminProdctVO selectProdctCode() throws Exception;
+	
+	
+	
+	
+	
+}

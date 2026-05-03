@@ -1,0 +1,6 @@
+package net.su.admin.mem.service;
+
+
+public interface AdminMemService {
+
+}

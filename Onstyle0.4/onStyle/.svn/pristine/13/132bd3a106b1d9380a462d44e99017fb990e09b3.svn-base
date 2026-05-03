@@ -1,0 +1,14 @@
+package net.su.admin.ordr.service;
+
+import javax.annotation.Resource;
+
+import net.su.admin.ordr.dao.AdminOrdrDAO;
+
+import org.springframework.stereotype.Service;
+
+@Service
+public class AdminOrdrServiceImpl implements AdminOrdrService{
+
+	@Resource
+	private AdminOrdrDAO adminOrdrDAO;
+}

@@ -1,0 +1,20 @@
+package net.su.app.appProdct.service;
+
+import java.util.List;
+
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Service;
+
+import net.su.app.appCodi.service.appCodiReqstService;
+import net.su.app.appProdct.dao.appProdctDAO;
+import net.su.consmr.prodct.vo.ProdctVO;
+import net.su.logger.Logger;
+
+@Service
+public class appProdctServiceImpl implements appCodiReqstService{
+
+	@Resource	
+	appProdctDAO appProdctDao;
+
+}

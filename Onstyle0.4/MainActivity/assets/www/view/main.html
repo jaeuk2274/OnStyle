@@ -1,0 +1,94 @@
+<!doctype html>
+<html>
+<head>
+	 <title>My Page</title>
+<!--핸드폰 화면에 맞게 보여주게 하는 것 -->
+	<meta http-equiv='Content-Type' content='text/html; charset=utf-8'/>
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+	
+<!-- jquery mobile  -->
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile.structure-1.4.5.min.css" />
+	<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+	<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+	
+<!-- jquery mobile 테마 -->
+	<link rel="stylesheet" href="../css/themes/onStyle.min.css" />
+	<link rel="stylesheet" href="../css/themes/jquery.mobile.icons.min.css" />
+
+<!-- nativedroid2에 필요한 자바스크립트 파일 -->
+	<script src="../js/nativedroid2.js"></script>
+	
+	<!-- bxSlider Javascript file -->
+	<script src="../js/jquery.bxslider/jquery.bxslider.min.js"></script>
+
+	<!-- bxSlider CSS file -->
+	<link href="../js/jquery.bxslider/jquery.bxslider.css" rel="stylesheet" />
+	
+	<script src="../js/main/main.js"></script>
+	<script src="../js/codi/MyDressRoomVirtualCodi.js"></script>
+	
+<style>
+.mainLogo{
+	display:block;
+	margin-left:auto;
+	margin-right:auto;
+}
+.adver{
+	 height:200px;
+	 width:100%; 
+}
+</style>
+
+</head>
+<body>
+
+<div data-role="page">
+	<!--사용자 좌탭 메뉴 -->
+	<nd2-include data-src="leftTabPanel.html"></nd2-include>
+	
+	<!--상단 메뉴바 -->
+	<div data-role="header" data-position="fixed" style="background-color:white; height:70px;">
+		<nd2-include data-src="topMenu.html"></nd2-include>
+	</div><!-- /header(툴바의 형태) -->
+
+	<!-- 내용 -->
+	<div data-role="content" style="background-color:white;">
+
+		<!--배너광고 -->
+		<div style="text-align:center; height:200px;">
+			<ul class="bxslider">
+				<li><img class="adver" src="../img/main/mainAdver.PNG"></li>
+				<li><img class="adver" src="../img/main/mainAdver2.png"></li>
+			</ul>
+		</div>
+		
+		<!-- 상품 분류 -->
+		<div data-role="navbar" style="background-color:white; padding-top:3%;">
+			<ul>
+				<li><a href="#">NEW</a></li>
+				<li><a onclick="">TOP</a></li>
+				<li><a onclick="">BOTTOM</a></li>
+				<li><a onclick="">DRESS</a></li>
+			</ul>
+			<ul>
+				<li><a onclick="">Shoes & Bags</a></li>
+				<li><a onclick="">나의 옷장</a></li>
+				<li><a onclick="">언니에게 물어봐</a></li>
+				<li><a onclick="">오늘 나 어때?</a></li>
+			</ul>
+		</div>
+		
+		<!-- 상품 조회 -->
+		<div class="ui-grid-d" style="height:200px; padding-top:3%;">
+			<div class="ui-block-a" style="border:1px solid red; width:32%; text-align:center;">12</div>
+			<div class="ui-block-b" style="width:2%;"></div>
+			<div class="ui-block-c" style="border:1px solid blue; width:32%; text-align:center;">12</div>
+			<div class="ui-block-d" style="width:2%;"></div>
+			<div class="ui-block-e" style="border:1px solid red; width:32%; text-align:center;">12</div>
+		</div>
+		
+	</div><!-- /content -->
+
+</div><!-- /page -->
+</body>
+</html>

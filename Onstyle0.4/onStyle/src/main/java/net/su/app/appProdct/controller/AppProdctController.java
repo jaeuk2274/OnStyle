@@ -1,0 +1,34 @@
+package net.su.app.appProdct.controller;
+
+import java.util.List;
+
+import javax.annotation.Resource;
+
+import net.su.consmr.prodct.service.ProdctService;
+import net.su.consmr.prodct.vo.ProdctVO;
+import net.su.logger.Logger;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+@Controller
+public class AppProdctController {
+	@Resource
+	private ProdctService prodctService;
+	
+	//상품 전체 조회
+	@ResponseBody
+	@RequestMapping(value = "/appProdctFrameSelect.do", method = {RequestMethod.GET, RequestMethod.POST})
+	public List<ProdctVO> prodctFrameSelect(Model model, ProdctVO prodctVO) throws Exception {
+		Logger.info("app 상품 조회");
+		
+		List<ProdctVO> prodctList = prodctService.prodctSelect(prodctVO);
+		model.addAttribute("prodctList", prodctList);
+		
+		return prodctList;
+	}
+		
+}

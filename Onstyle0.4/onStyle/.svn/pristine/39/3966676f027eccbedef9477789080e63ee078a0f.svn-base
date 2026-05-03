@@ -1,0 +1,121 @@
+package net.su.consmr.mem.vo;
+
+public class MemSizeVO {
+	
+	private int mem_size_seq;
+	private int mem_top_length;
+	private int mem_top_shouldr;
+	private int mem_top_bust;
+	private int mem_top_tail_girth;
+	private int mem_top_slv_length;
+	private int mem_top_slv_opening;
+	private int mem_top_slv_bill;
+	private int mem_bottom_length;
+	private int mem_bottom_waist;
+	private int mem_bottom_hip;
+	private int mem_bottom_thigh;
+	private int mem_bottom_tail_girth;
+	private int mem_bottom_front_width;
+	private int mem_bottom_back_width;
+	private int mem_seq;
+	
+	
+   	public int getMem_seq() {
+		return mem_seq;
+	}
+	public void setMem_seq(int mem_seq) {
+		this.mem_seq = mem_seq;
+	}
+	public int getMem_size_seq() {
+		return mem_size_seq;
+	}
+	public void setMem_size_seq(int mem_size_seq) {
+		this.mem_size_seq = mem_size_seq;
+	}
+	public int getMem_top_length() {
+		return mem_top_length;
+	}
+	public void setMem_top_length(int mem_top_length) {
+		this.mem_top_length = mem_top_length;
+	}
+	public int getMem_top_shouldr() {
+		return mem_top_shouldr;
+	}
+	public void setMem_top_shouldr(int mem_top_shouldr) {
+		this.mem_top_shouldr = mem_top_shouldr;
+	}
+	public int getMem_top_bust() {
+		return mem_top_bust;
+	}
+	public void setMem_top_bust(int mem_top_bust) {
+		this.mem_top_bust = mem_top_bust;
+	}
+	public int getMem_top_tail_girth() {
+		return mem_top_tail_girth;
+	}
+	public void setMem_top_tail_girth(int mem_top_tail_girth) {
+		this.mem_top_tail_girth = mem_top_tail_girth;
+	}
+	public int getMem_top_slv_length() {
+		return mem_top_slv_length;
+	}
+	public void setMem_top_slv_length(int mem_top_slv_length) {
+		this.mem_top_slv_length = mem_top_slv_length;
+	}
+	public int getMem_top_slv_opening() {
+		return mem_top_slv_opening;
+	}
+	public void setMem_top_slv_opening(int mem_top_slv_opening) {
+		this.mem_top_slv_opening = mem_top_slv_opening;
+	}
+	public int getMem_top_slv_bill() {
+		return mem_top_slv_bill;
+	}
+	public void setMem_top_slv_bill(int mem_top_slv_bill) {
+		this.mem_top_slv_bill = mem_top_slv_bill;
+	}
+	public int getMem_bottom_length() {
+		return mem_bottom_length;
+	}
+	public void setMem_bottom_length(int mem_bottom_length) {
+		this.mem_bottom_length = mem_bottom_length;
+	}
+	public int getMem_bottom_waist() {
+		return mem_bottom_waist;
+	}
+	public void setMem_bottom_waist(int mem_bottom_waist) {
+		this.mem_bottom_waist = mem_bottom_waist;
+	}
+	public int getMem_bottom_hip() {
+		return mem_bottom_hip;
+	}
+	public void setMem_bottom_hip(int mem_bottom_hip) {
+		this.mem_bottom_hip = mem_bottom_hip;
+	}
+	public int getMem_bottom_thigh() {
+		return mem_bottom_thigh;
+	}
+	public void setMem_bottom_thigh(int mem_bottom_thigh) {
+		this.mem_bottom_thigh = mem_bottom_thigh;
+	}
+	public int getMem_bottom_tail_girth() {
+		return mem_bottom_tail_girth;
+	}
+	public void setMem_bottom_tail_girth(int mem_bottom_tail_girth) {
+		this.mem_bottom_tail_girth = mem_bottom_tail_girth;
+	}
+	public int getMem_bottom_front_width() {
+		return mem_bottom_front_width;
+	}
+	public void setMem_bottom_front_width(int mem_bottom_front_width) {
+		this.mem_bottom_front_width = mem_bottom_front_width;
+	}
+	public int getMem_bottom_back_width() {
+		return mem_bottom_back_width;
+	}
+	public void setMem_bottom_back_width(int mem_bottom_back_width) {
+		this.mem_bottom_back_width = mem_bottom_back_width;
+	}
+
+
+}

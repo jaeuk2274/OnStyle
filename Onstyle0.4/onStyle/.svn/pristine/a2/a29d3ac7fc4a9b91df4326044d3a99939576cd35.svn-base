@@ -1,0 +1,11 @@
+package net.su.admin.prodct.dao;
+
+import org.mybatis.spring.support.SqlSessionDaoSupport;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public class AdminProdctDAO extends SqlSessionDaoSupport{
+        clothRead = getSqlSession().selectOne("myDressRoomMapper.myClothRead", myDrsRmVO);
+        return prodctVO;
+     }
+}

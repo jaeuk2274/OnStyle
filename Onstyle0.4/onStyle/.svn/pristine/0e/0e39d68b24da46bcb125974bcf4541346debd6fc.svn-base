@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+
+<mapper namespace="consmrProdctMapper">
+<!-- 장바구니 담기 -->
+	<insert id="cartInsert" parameterType="shpbagVo">
+		INSERT INTO shpbag_tb(shpbag_seq, shpbag_size, shpbag_quanty, shpbag_color, prodct_seq, mem_seq)
+		VALUES(
+				(SELECT IFNULL(MAX(sh.shpbag_seq),0)+1 FROM shpbag_tb sh),
+				#{shpbag_size},
+				#{shpbag_quanty},
+				#{shpbag_color},
+				#{prodct_seq},
+				#{mem_seq}
+		)
+	</insert>
+	 
+<!-- 	상단 탭 클릭시 상품조회 -->
+	<select id="prodctSelect" resultType="prodctVo" parameterType="prodctVo">
+				SELECT prodct_seq, prodct_sell_state, prodct_img_route1
+				FROM prodct
+		<choose>
+			<when test="prodct_sell_state == null">
+			</when>
+			<when test="prodct_sell_state != null">
+				WHERE prodct_sell_state = #{prodct_sell_state}
+			</when>
+		</choose>
+	</select>
+<!-- 	상품 상세보기 정보 -->
+	<select id="prodctView" resultType="prodctVo" parameterType="prodctVo">
+			SELECT prodct_seq, prodct_nme, prodct_img_route1, prodct_img_route2, prodct_img_route3, prodct_img_route4,
+					prodct_regtime, admin_prodct_nme, prodct_disply_state, prodct_sell_state, prodct_price, suplr_price, 
+					prodct_washtip, client_seq, category_seq, prodct_matrl
+			FROM prodct p
+			WHERE p.prodct_seq = #{prodct_seq}
+	</select>
+<!-- 	상품 색상 조회 -->
+	<select id="selectProdctColor" resultType="prodctVo" parameterType="prodctVo">
+			SELECT  prodct_color_nme, (select count(prodct_color_seq) from prodct_color_tb where prodct_seq = #{prodct_seq}) as colorCount
+			FROM prodct_color_tb			
+			WHERE prodct_seq = #{prodct_seq}	
+	</select>
+<!-- 	상품치수조회 -->
+	<select id="selectProdctSize" resultType="prodctVo" parameterType="prodctVo">
+			<choose>
+				<when test="category_seq == 1">			
+					SELECT  top_size_seq, top_bust, top_length, top_shouldr, top_size_nme, top_size_seq, top_slv_bill,
+							top_slv_length, top_slv_opening, top_tail_girth, (select count(top_size_seq) from top_size_tb where prodct_seq = #{prodct_seq}) as sizeCount
+					FROM top_size_tb
+				</when>
+				<when test="category_seq == 2">			
+					SELECT  bottom_size_seq, bottom_size_nme, bottom_length, bottom_waist, bottom_hip, bottom_thigh, bottom_tail_girth,
+							bottom_front_width, bottom_back_width, (select count(bottom_size_seq) from bottom_size_tb where prodct_seq = #{prodct_seq}) as sizeCoun
+					FROM bottom_size_tb
+				</when>
+			</choose>
+			WHERE prodct_seq = #{prodct_seq}	
+	</select>
+<!-- 	해당상품 베스트코디조회 -->
+	<select id ="selectProdctBestCodi" resultType="codiShrVo" parameterType="codiShrVo">
+		SELECT	max(b.likeNum) as liked, b.codi_shr_seq, b.codi_shr_regtime, b.codi_img_route, b.mem_name, b.mem_img_route, b.reply_count as reply, b.likeState, b.codi_seq, b.mem_seq
+		FROM (SELECT a.codi_shr_seq, cs.codi_shr_regtime, c.codi_img_route, 
+					m.mem_img_route, m.mem_name, c.mem_seq, cs.codi_seq,
+					max(a.likeNum) as likeNum, count(cr.codi_reply_seq) as reply_count, a.likeState 
+			  FROM(SELECT codi_shr_seq, count(*) as likeNum, (SELECT max(c.likeState)
+															   FROM (SELECT count(like_seq) as likeState
+																	 FROM like_tb
+																	 WHERE codi_shr_seq = (select ff.codi_shr_seq
+																							from(
+																							select max(f.likeState) as likeCount, f.codi_shr_seq
+																							from (SELECT distinct cs.codi_shr_seq, count(l.like_seq) as likeState
+																							FROM prodct p
+																							JOIN  codi_use_tb cu
+																							ON p.prodct_seq = cu.prodct_seq
+																							JOIN codi_shr_tb cs
+																							ON cs.codi_seq = cu.codi_seq
+																							JOIN codi_tb c
+																							ON c.codi_seq = cu.codi_seq
+																							JOIN like_tb l
+																							ON l.codi_shr_seq = cs.codi_shr_seq
+																							WHERE p.prodct_seq = #{prodct_seq}
+																							group by codi_shr_seq) f) ff)																						
+																
+																<choose>															
+																	<when test="mem_seq != 0">
+																		AND mem_seq = #{mem_seq}
+																	</when>
+																</choose>
+																GROUP BY codi_shr_seq) c) as likeState
+																													
+				  FROM like_tb
+				  WHERE codi_shr_seq in (SELECT cs.codi_shr_seq
+										FROM prodct p
+										JOIN codi_use_tb cu
+										ON p.prodct_seq = cu.prodct_seq
+										JOIN codi_shr_tb cs
+										ON cs.codi_seq = cu.codi_seq
+										WHERE p.prodct_seq = #{prodct_seq})
+				  GROUP BY codi_shr_seq) a
+			JOIN codi_shr_tb cs
+			ON a.codi_shr_seq = cs.codi_shr_seq
+			JOIN codi_tb c
+			ON cs.codi_seq = c.codi_seq
+			JOIN codi_reply_tb cr
+			ON a.codi_shr_seq = cr.codi_shr_seq
+            JOIN mem_tb m
+            ON m.mem_seq = c.mem_seq
+            WHERE a.likeNum >= 3
+			GROUP BY a.codi_shr_seq) as b;
+	</select>
+
+	<select id="crtselect" parameterType="shpbagVo" resultType="shpbagVo">
+		SELECT		 me.mem_seq
+					, me.mem_name
+					, prodct_img_route1
+					, pd.prodct_nme as prodct_nme
+					, pd.prodct_price as prodct_price
+					, sh.shpbag_quanty as shpbag_quanty
+					
+		FROM   		shpbag_tb sh
+					, prodct pd
+					, mem_tb me
+					
+		WHERE		sh.prodct_seq = pd.prodct_seq
+		AND	   		sh.mem_seq = me.mem_seq
+		AND			me.mem_seq = #{mem_seq};
+	</select>
+</mapper>
