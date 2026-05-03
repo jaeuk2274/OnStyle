@@ -1,6 +1,6 @@
 # 온스타일(Onstyle) 프로젝트 폴더 전체 분석
 
-<video src="온스타일 최종 영상.mp4" controls width="100%"></video>
+<video src="https://github.com/jaeuk2274/OnStyle/releases/download/v1.0/default.mp4" controls width="100%"></video>
 
 ## 1. 프로젝트 개요
 
